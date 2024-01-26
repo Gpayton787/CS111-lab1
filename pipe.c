@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 	// First print args
 	printf("argc: %i\n", argc);
 	for(int i = 0; i < argc; i++){
-		printf("arg %i: %s\n", argv[i]);
+		printf("arg %i: %s\n", i, argv[i]);
 	}
 	//Test fork
 	int return_code = fork();
