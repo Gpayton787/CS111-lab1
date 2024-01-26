@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	if(return_code == 0){
 		//Child
 		printf("Child Process: \n");
-		execlp("ls", "ls", "NULL");
+		execlp("ls", "ls", "-a", "-l", "NULL");
 		exit(0);
 	}
 	else if(return_code > 0){
