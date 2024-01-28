@@ -23,16 +23,19 @@ int main(int argc, char *argv[])
 		printf("Child Process: \n");
 		// execlp("ls", "ls", NULL);
 		write(fds[1], "four", 4);
+		printf("written\n");
 		exit(0);
 	}
 	else if(return_code > 0){
 		printf("Parent Process: \n");
 		int pid = return_code;
 		int status = 0;
+		printf("waiting\n");
 		waitpid(pid, &status, 0);
 		char buffer[100];
+		printf("reading\n");
 		read(fds[0], buffer, 4);
-		printf("%s", buffer);
+		printf("%s\n", buffer);
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
 	}
 	else{
