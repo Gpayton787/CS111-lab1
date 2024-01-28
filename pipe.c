@@ -20,8 +20,10 @@ int main(int argc, char *argv[])
 	if(return_code == 0){
 		//Child
 		printf("Child Process: \n");
-		dup2(fds[1], STDOUT_FILENO);
 		close(fds[1]);
+		close(0);
+		dup(fds[0]);
+		close(fds[0]);
 		execlp("ls", "ls", NULL);
 		printf("ERROR THIS SHOULD NOT RUN\n");
 		exit(0);
@@ -36,8 +38,10 @@ int main(int argc, char *argv[])
 		// printf("reading from pipe...\n");
 		// read(fds[0], buffer, 4);
 		// printf("%s\n", buffer);
-		dup2(fds[0], STDIN_FILENO);
 		close(fds[0]);
+		close(1);
+		dup(fds[1]);
+		close(fds[1]);
 		execlp("wc", "wc", NULL);
 		printf("SHOULD NOT BE PRINTED");
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
