@@ -43,8 +43,8 @@ int main(int argc, char *argv[])
 		close(0); //Close stdin of parent
 		dup(fds[0]); // point stdin to read end
 		close(fds[0]); //close unused read end fd.
-		printf("gonna call ls now");
-		execlp("ls", "ls", NULL);
+		printf("gonna call wc now");
+		execlp("wc", "wc", NULL);
 		printf("SHOULD NOT BE PRINTED");
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
 	}
