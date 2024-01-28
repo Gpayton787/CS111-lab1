@@ -20,12 +20,12 @@ int main(int argc, char *argv[])
 	if(return_code == 0){
 		//Child
 		printf("Child Process: \n");
-		close(fds[1]);
-		close(0); //Close child processes stdin
-		dup(fds[0]); //Point 0 fd to read end of pipe
-		close(fds[0]); //Close unused readend fd
-		printf("Now gonna call wc, hopefully reading from read end of pipe\n");
-		execlp("wc", "wc", NULL);
+		close(fds[0]); //close read end
+		close(1); //Close child processes stdout
+		dup(fds[1]); //Point 1 fd to write end
+		close(fds[1]); //Close unused write end
+		printf("Now gonna call ls, hopefully writing to read end\n");
+		execlp("ls", "ls", NULL);
 		printf("ERROR THIS SHOULD NOT RUN\n");
 		exit(0);
 	}
@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 		// printf("reading from pipe...\n");
 		// read(fds[0], buffer, 4);
 		// printf("%s\n", buffer);
-		close(fds[0]); //close read end
-		close(1); //Close stdout of parent
-		dup(fds[1]); // point stdout to write end
-		close(fds[1]); //close unused write end fd
+		close(fds[1]); //close write end
+		close(0); //Close stdin of parent
+		dup(fds[0]); // point stdin to read end
+		close(fds[0]); //close unused read end fd.
 		printf("gonna call ls now");
 		execlp("ls", "ls", NULL);
 		printf("SHOULD NOT BE PRINTED");
