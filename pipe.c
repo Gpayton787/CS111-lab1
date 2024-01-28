@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 		close(0);
 		dup(fds[0]);
 		close(fds[0]);
-		execlp("ls", "ls", NULL);
+		execlp("wc", "wc", NULL);
 		printf("ERROR THIS SHOULD NOT RUN\n");
 		exit(0);
 	}
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 		close(1);
 		dup(fds[1]);
 		close(fds[1]);
-		execlp("wc", "wc", NULL);
+		execlp("ls", "ls", NULL);
 		printf("SHOULD NOT BE PRINTED");
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
 	}
