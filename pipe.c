@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
 	// for(int i = 0; i < argc; i++){
 	// 	printf("arg %i: %s\n", i, argv[i]);
 	// }
-
 	//Try piping now
 
 	int fds[2];
@@ -21,9 +20,9 @@ int main(int argc, char *argv[])
 	if(return_code == 0){
 		//Child
 		printf("Child Process: \n");
-		// execlp("ls", "ls", NULL);
-		write(fds[1], "four", 4);
-		printf("written\n");
+		dup2(fds[1], STDOUT_FILENO);
+		execlp("ls", "ls", NULL);
+		printf("ERROR THIS SHOULD NOT RUN\n");
 		exit(0);
 	}
 	else if(return_code > 0){
@@ -32,10 +31,13 @@ int main(int argc, char *argv[])
 		int status = 0;
 		printf("waiting\n");
 		waitpid(pid, &status, 0);
-		char buffer[100];
-		printf("reading\n");
-		read(fds[0], buffer, 4);
-		printf("%s\n", buffer);
+		// char buffer[4000];
+		// printf("reading from pipe...\n");
+		// read(fds[0], buffer, 4);
+		// printf("%s\n", buffer);
+		dup2(fds[0], STDIN_FILENO);
+		execlp("wc", "wc", NULL);
+		printf("SHOULD NOT BE PRINTED");
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
 	}
 	else{
