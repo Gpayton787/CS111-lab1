@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 		//Child
 		printf("Child Process: \n");
 		dup2(fds[1], STDOUT_FILENO);
+		close(fds[1]);
 		execlp("ls", "ls", NULL);
 		printf("ERROR THIS SHOULD NOT RUN\n");
 		exit(0);
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
 		// read(fds[0], buffer, 4);
 		// printf("%s\n", buffer);
 		dup2(fds[0], STDIN_FILENO);
+		close(fds[0]);
 		execlp("wc", "wc", NULL);
 		printf("SHOULD NOT BE PRINTED");
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
