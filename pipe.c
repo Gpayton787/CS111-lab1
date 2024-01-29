@@ -19,10 +19,11 @@ int main(int argc, char *argv[])
 	if(return_code == 0){
 		//Child
 		printf("Child Process: \n");
+		printf("Redirct and run program A\n");
 		dup2(fds[1], STDOUT_FILENO);
 		close(fds[1]);
-		printf("Run program A\n");
 		execlp("ls", "ls", NULL);
+		printf("SHOULD NOT BE PRINTED");
 		exit(0);
 	}
 	else if(return_code > 0){
@@ -31,7 +32,7 @@ int main(int argc, char *argv[])
 		int status = 0;
 		waitpid(pid, &status, 0);
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
-		printf("Now run program B\n");
+		printf("Now change stdin to be read end of pipe and run program B\n");
 		dup2(fds[0], STDIN_FILENO);
 		close(fds[0]);
 		execlp("wc", "wc", NULL);
