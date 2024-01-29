@@ -20,24 +20,23 @@ int main(int argc, char *argv[])
 		//Child
 		printf("Child Process: \n");
 		dup2(fds[1], STDOUT_FILENO);
+		close(fds[1]);
+		printf("Run program A\n");
 		execlp("ls", "ls", NULL);
-		printf("ERROR THIS SHOULD NOT RUN\n");
 		exit(0);
 	}
 	else if(return_code > 0){
 		printf("Parent Process: \n");
 		int pid = return_code;
 		int status = 0;
-		printf("waiting\n");
 		waitpid(pid, &status, 0);
-		// char buffer[4000];
-		// printf("reading from pipe...\n");
-		// read(fds[0], buffer, 4);
-		// printf("%s\n", buffer);
+		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
+		printf("Now run program B\n");
 		dup2(fds[0], STDIN_FILENO);
+		close(fds[0]);
 		execlp("wc", "wc", NULL);
 		printf("SHOULD NOT BE PRINTED");
-		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
+		
 	}
 	else{
 		printf("Child process creation error\n");
