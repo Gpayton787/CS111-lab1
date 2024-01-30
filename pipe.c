@@ -6,6 +6,10 @@
 
 int main(int argc, char *argv[])
 {
+	//If no program
+	if(argc == 1){
+		exit(0);
+	}
 	//If we only have 1 program
 	if(argc == 2){
 		printf("execute %s\n", argv[1]);
@@ -69,12 +73,14 @@ int main(int argc, char *argv[])
 		}
 	}
 	//If there is a program left over
-	if(argc % 2 != 0){
+	if(argc % 2){
 		//Execute the last program reading from pipe 2
 		;
 	}
 
+	return 0;
 
+	//Static 2 argument program
 
 	int fds[2];
 	pipe(fds); //Create a pipe
