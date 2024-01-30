@@ -7,13 +7,12 @@
 int main(int argc, char *argv[])
 {
 	
-	for(int i = 1; i < argc; i++){
-		//If we only have 1 program
-		if(argc == 2){
-			execlp(argv[i], argv[i], NULL);
-		}
-	}
-	return 0;
+	// for(int i = 1; i < argc; i++){
+	// 	//If we only have 1 program
+	// 	if(argc == 2){
+	// 		execlp(argv[i], argv[i], NULL);
+	// 	}
+	// }
 
 	int fds[2];
 	pipe(fds); //Create a pipe
