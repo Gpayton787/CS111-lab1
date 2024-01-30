@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 		close(fds[0]);
 		//Check if we print to stdout
 		printf("Hello mane\n");
-		execlp("wc", "wc", NULL);
+		execlp("cat", "cat", NULL);
 		printf("SHOULD NOT BE PRINTED");
 		
 	}
