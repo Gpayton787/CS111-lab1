@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 		printf("execute %s\n", argv[1]);
 		// execlp(argv[1], argv[1], NULL);
 	}
-	for(int i = 1; i < argc-2; i++){
+	for(int i = 1; i < argc-1; i++){
 		//Create pipes
 		int fds1[2];
 		int fds2[2];
@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
 				close(fds2[0]);
 			}
 			//Else we are the last program
-			printf("%s\n", buffer);
+			printf("%s", buffer);
+			printf("+ program %i\n", i+1);
 			// execlp(argv[i+1], argv[i+1], NULL);
 		}
 	}
