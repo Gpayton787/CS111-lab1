@@ -34,13 +34,16 @@ int main(int argc, char *argv[])
 		waitpid(pid, &status, 0);
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
 		printf("Now change stdin to be read end of pipe and run program B\n");
-		char buf[100];
-		read(fds[0], buf, 100);
-		printf("%s\n", buf);
-		// dup2(fds[0], STDIN_FILENO);
-		// close(fds[0]);
-		// execlp("wc", "wc", NULL);
-		// printf("SHOULD NOT BE PRINTED");
+		// char buf[100];
+		// read(fds[0], buf, 100);
+		// printf("%s\n", buf);
+		//Redirect stdin
+		dup2(fds[0], STDIN_FILENO);
+		close(fds[0]);
+		//Check if we print to stdout
+		printf("Hello mane\n");
+		execlp("wc", "wc", NULL);
+		printf("SHOULD NOT BE PRINTED");
 		
 	}
 	else{
