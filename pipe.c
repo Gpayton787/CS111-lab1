@@ -6,11 +6,14 @@
 
 int main(int argc, char *argv[])
 {
-	// First print args
-	// printf("argc: %i\n", argc);
-	// for(int i = 0; i < argc; i++){
-	// 	printf("arg %i: %s\n", i, argv[i]);
-	// }
+	
+	for(int i = 1; i < argc; i++){
+		//If we only have 1 program
+		if(argc == 2){
+			execlp(argv[i], argv[i], NULL);
+		}
+	}
+	return 0;
 
 	int fds[2];
 	pipe(fds); //Create a pipe
@@ -19,12 +22,12 @@ int main(int argc, char *argv[])
 	if(return_code == 0){
 		//Child
 		printf("Child Process: \n");
-		printf("Redirct and run program A\n");
+		printf("Redirect stdout and run program A\n");
 		dup2(fds[1], STDOUT_FILENO);
 		close(fds[1]);
 		execlp("ls", "ls", NULL);
 		//break here
-		printf("yoyoyo");
+		printf("SHOULD NOT BE PRINTED");
 		exit(0);
 	}
 	else if(return_code > 0){
@@ -33,15 +36,9 @@ int main(int argc, char *argv[])
 		int status = 0;
 		waitpid(pid, &status, 0);
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
-		printf("Now change stdin to be read end of pipe and run program B\n");
-		// char buf[100];
-		// read(fds[0], buf, 100);
-		// printf("%s\n", buf);
-		//Redirect stdin
+		printf("Redirct stdin run program B\n");
 		dup2(fds[0], STDIN_FILENO);
 		close(fds[0]);
-		//Check if we print to stdout
-		printf("Hello mane\n");
 		execlp("cat", "cat", NULL);
 		printf("SHOULD NOT BE PRINTED");
 		
