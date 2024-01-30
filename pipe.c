@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 		printf("Redirct stdin run program B\n");
 		dup2(fds[0], STDIN_FILENO);
 		close(fds[0]);
+		close(fds[1]);
 		execlp("cat", "cat", NULL);
 		printf("SHOULD NOT BE PRINTED");
 		
