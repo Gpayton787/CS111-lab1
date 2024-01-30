@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 				printf("reading from stdin...");
 			}
 			else{
-				printf("not reading from stdin...")
+				printf("not reading from stdin...");
 			}
 			//redirect its stdout to write end of pipe 1
 			dup2(fds1[1], STDOUT_FILENO);
