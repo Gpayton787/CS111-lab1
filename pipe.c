@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 		printf("Redirect stdout and run program A\n");
 		dup2(fds[1], STDOUT_FILENO);
 		close(fds[1]);
+		close(fds[0]);
 		execlp("ls", "ls", NULL);
 		//break here
 		printf("SHOULD NOT BE PRINTED");
