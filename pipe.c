@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
 		printf("Redirct and run program A\n");
 		dup2(fds[1], STDOUT_FILENO);
 		close(fds[1]);
-		execlp("ls", "ls", NULL);
-		printf("SHOULD NOT BE PRINTED");
+		// execlp("ls", "ls", NULL);
+		printf("yoyoyo");
 		exit(0);
 	}
 	else if(return_code > 0){
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 		printf("Child process done, exited with code: %d\n", WEXITSTATUS(status));
 		printf("Now change stdin to be read end of pipe and run program B\n");
 		char buf[100];
-		read(fds[0], buf, 20);
+		read(fds[0], buf, 6);
 		printf("%s\n", buf);
 		// dup2(fds[0], STDIN_FILENO);
 		// close(fds[0]);
