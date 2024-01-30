@@ -1,0 +1,6 @@
+Makefile
+README.md
+newfile.txt
+pipe.c
+pipe.o
+test_lab1.py
