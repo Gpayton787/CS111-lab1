@@ -52,6 +52,9 @@ int main(int argc, char *argv[])
 			dup2(fds1[1], STDOUT_FILENO);
 			close(fds1[1]);
 			close(fds1[0]);
+			if(i == 3){
+				exit(EXIT_FAILURE);
+			}
 			//Call program
 			execlp(argv[i], argv[i], NULL);
 		}
