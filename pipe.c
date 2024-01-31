@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 				printf("Sucessfully reading from stdin...\n");
 			}
 			//redirect its stdout to write end of pipe 1
+			printf("Redirect Output, then call program\n");
 			dup2(fds1[1], STDOUT_FILENO);
 			close(fds1[1]);
 			close(fds1[0]);
@@ -79,8 +80,6 @@ int main(int argc, char *argv[])
 					int pid = return_code;
 					int status = 0;
 					waitpid(pid, &status, 0);
-					close(fds2[1]);
-					close(fds2[0]);
 				}
 			}
 			else{
