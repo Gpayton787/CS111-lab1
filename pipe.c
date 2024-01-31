@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 				dup2(fds2[0], STDIN_FILENO);
 				close(fds2[1]);
 				close(fds2[0]);
-				printf("Sucessfully reading from stin...\n");
+				printf("Sucessfully reading from stdin...\n");
 			}
 			//redirect its stdout to write end of pipe 1
 			dup2(fds1[1], STDOUT_FILENO);
@@ -79,6 +79,8 @@ int main(int argc, char *argv[])
 					int pid = return_code;
 					int status = 0;
 					waitpid(pid, &status, 0);
+					close(fds2[1]);
+					close(fds2[0]);
 				}
 			}
 			else{
