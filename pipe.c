@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
 		int fds1[2];
 		pipe(fds1);
 		//Wait to create second pipe
-		//If there are more than 2 processes left
 		printf("There are %i remaining programs to be run\n", argc-i);
 	
 		int return_code = fork();
@@ -44,7 +43,6 @@ int main(int argc, char *argv[])
 			//redirect its stdout to write end of pipe 1
 			dup2(fds1[1], STDOUT_FILENO);
 			close(fds1[1]);
-			close(fds1[0]);
 			//Call program
 			execlp(argv[i], argv[i], NULL);
 		}
