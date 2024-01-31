@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	int fds2[2];
 	for(int i = 1; i < argc; i+=2){
 		//If only one remaining process
-		if(i+1 == argc-1){
+		if(i+1 == argc){
 			printf("ONE REMAINING PROCESS\n");
 			dup2(fds2[0], STDIN_FILENO);
 			close(fds2[1]);
