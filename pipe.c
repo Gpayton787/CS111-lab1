@@ -37,10 +37,11 @@ int main(int argc, char *argv[])
 			//Child
 			// If this is NOT the first process, take from read end of pipe2
 			if(i != 1){
-				printf("reading from stdin...\n");
+				printf("reading from stdin...");
 				dup2(fds2[0], STDIN_FILENO);
 				close(fds2[1]);
 				close(fds2[0]);
+				printf("Sucessfully reading from stin...\n");
 			}
 			//redirect its stdout to write end of pipe 1
 			dup2(fds1[1], STDOUT_FILENO);
