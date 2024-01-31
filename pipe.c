@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	}
 	//Declare pipe2's fds so we can still access them outside of the loop
 	int fds2[2];
-	for(int i = 1; i < argc-1; i++){
+	for(int i = 1; i < argc; i+=2){
 		//If only one remaining process
 		if(i+1 == argc-1){
 			dup2(fds2[0], STDIN_FILENO);
