@@ -28,7 +28,11 @@ int main(int argc, char *argv[])
 		//Create pipe 1
 		printf("Iteration: %i\n", i);
 		int fds1[2];
-		pipe(fds1);
+		int retval = pipe(fds1);
+		if(retval < 0){
+			perror("pipe");
+            exit(EXIT_FAILURE);
+		}
 		//Wait to create second pipe
 		printf("There are %i remaining programs to be run\n", argc-i);
 	
