@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
 	//Run the remaining program
 	execlp(argv[argc-1], argv[argc-1], NULL);
 
+	exit(1);
 	return 0;
 
 }
