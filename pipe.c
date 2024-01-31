@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 				dup2(fds2[0], STDIN_FILENO);
 				close(fds2[1]);
 				close(fds2[0]);
-				execlp("pwd", "pwd", NULL);
 			}
 			//redirect its stdout to write end of pipe 1
 			dup2(fds1[1], STDOUT_FILENO);
