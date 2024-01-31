@@ -51,14 +51,17 @@ int main(int argc, char *argv[])
 		}
 		else if(return_code > 0){
 			//Parent
+			printf("Parent, wait\n");
 			int pid = return_code;
 			int status = 0;
 			waitpid(pid, &status, 0);
 			//Read from pipe 1
+			printf("Take from stdin of pipe1\n");
 			dup2(fds1[0], STDIN_FILENO);
 			close(fds1[0]);
 			close(fds1[1]);
 			//If we are not the last program, create pipe2, fork, and write to it
+			printf("%i is greater than 2?\n", argc-i);
 			if(argc-i > 2){
 				printf("Not the last program, create pipe 2\n");
 				pipe(fds2);
