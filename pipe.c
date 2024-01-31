@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 			close(fds1[1]);
 			//If we are not the last program, create pipe2, fork, and write to it
 			if(argc-i > 2){
+				printf("Not the last program, create pipe 2\n");
 				pipe(fds2);
 				int return_code = fork();
 				if(return_code == 0){
@@ -76,6 +77,7 @@ int main(int argc, char *argv[])
 				}
 			}
 			else{
+				printf("Last Program\n");
 				//We are the last program
 				execlp(argv[i+1], argv[i+1], NULL);
 			}
