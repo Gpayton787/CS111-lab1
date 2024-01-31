@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 	for(int i = 1; i < argc; i+=2){
 		//If only one remaining process
 		if(i+1 == argc-1){
+			printf("ONE REMAINING PROCESS\n");
 			dup2(fds2[0], STDIN_FILENO);
 			close(fds2[1]);
 			close(fds2[0]);
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
 		}
 		//Create pipe 1
 		printf("Iteration: %i\n", i);
+		return 0;
 		int fds1[2];
 		pipe(fds1);
 		//Wait to create second pipe
@@ -43,6 +45,7 @@ int main(int argc, char *argv[])
 			//redirect its stdout to write end of pipe 1
 			dup2(fds1[1], STDOUT_FILENO);
 			close(fds1[1]);
+			close(fds1[0]);
 			//Call program
 			execlp(argv[i], argv[i], NULL);
 		}
