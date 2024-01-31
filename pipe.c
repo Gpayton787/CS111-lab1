@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 	}
 	//Declare pipe2's fds so we can still access them outside of the loop
 	for(int i = 1; i < argc; i+=2){
+		int fds2[2];
 		//If only one remaining process
 		if(i+1 == argc){
 			printf("ONE REMAINING PROCESS\n");
@@ -69,7 +70,6 @@ int main(int argc, char *argv[])
 			printf("%i is greater than 2?\n", argc-i);
 			if(argc-i > 2){
 				printf("Not the last program, create pipe 2\n");
-				int fds2[2];
 				pipe(fds2);
 				int return_code = fork();
 				if(return_code == 0){
