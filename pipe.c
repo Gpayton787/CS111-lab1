@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
 		}
 		//Create pipe 1
 		printf("Iteration: %i\n", i);
-		return 0;
 		int fds1[2];
 		pipe(fds1);
 		//Wait to create second pipe
