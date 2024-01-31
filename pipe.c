@@ -14,47 +14,69 @@ int main(int argc, char *argv[])
 	if(argc == 2){
 		execlp(argv[1], argv[1], NULL);
 	}
+	//Declare pipe2's fds so we can still access them outside of the loop
+	int fds2[2];
 	for(int i = 1; i < argc-1; i++){
+		//If only one remaining process
+		if(i+1 == argc-1){
+			dup2(fds2[0], STDIN_FILENO);
+			close(fds2[1]);
+			close(fds2[0]);
+			execlp(argv[argc-1], argv[argc-1], NULL);
+		}
 		//Create pipe 1
 		printf("Iteration: %i\n", i);
 		int fds1[2];
 		pipe(fds1);
+		//Wait to create second pipe
 		//If there are more than 2 processes left
-		if(argc-i > 2){
-			;
-		}
-		else{
-			//There are only two processes left, pipe2 not needed
-			int return_code = fork();
-			if(return_code == 0){
-				//Child
-				
-				//If this NOT the first process, take from read end of pipe2
-				// if(i != 1){
-				// 	dup2(fds2[0], STDIN_FILENO);
-				// 	close(fds2[0]);
-				// 	close(fds2[1]);
-				// 	printf("reading from stdin...");
-				// }
-				//redirect its stdout to write end of pipe 1
-				dup2(fds1[1], STDOUT_FILENO);
-				close(fds1[1]);
-				close(fds1[0]);
-				//Call program
-				execlp(argv[i], argv[i], NULL);
+		printf("There are %i remaining programs to be run\n", argc-i);
+	
+		int return_code = fork();
+		if(return_code == 0){
+			//Child
+			// If this is NOT the first process, take from read end of pipe2
+			if(i != 1){
+				dup2(fds2[0], STDIN_FILENO);
+				close(fds2[0]);
+				close(fds2[1]);
 			}
-			else if(return_code > 0){
-				//Parent
-				int pid = return_code;
-				int status = 0;
-				waitpid(pid, &status, 0);
-				//Read from pipe 1
-				dup2(fds1[0], STDIN_FILENO);
-				close(fds1[0]);
-				close(fds1[1]);
-				//If we are not the last program, create pipe2 and write to it
-
-				//Else we are the last program
+			//redirect its stdout to write end of pipe 1
+			dup2(fds1[1], STDOUT_FILENO);
+			close(fds1[1]);
+			close(fds1[0]);
+			//Call program
+			execlp(argv[i], argv[i], NULL);
+		}
+		else if(return_code > 0){
+			//Parent
+			int pid = return_code;
+			int status = 0;
+			waitpid(pid, &status, 0);
+			//Read from pipe 1
+			dup2(fds1[0], STDIN_FILENO);
+			close(fds1[0]);
+			close(fds1[1]);
+			//If we are not the last program, create pipe2, fork, and write to it
+			if(argc-i > 2){
+				pipe(fds2);
+				int return_code = fork();
+				if(return_code == 0){
+					//Child, execute program, write to pipe 2
+					dup2(fds2[1], STDOUT_FILENO);
+					close(fds2[1]);
+					close(fds2[0]);
+					execlp(argv[i+1], argv[i+1], NULL);
+				}
+				if(return_code > 0){
+					//Do nothing just go to the next iteration
+					int pid = return_code;
+					int status = 0;
+					waitpid(pid, &status, 0);
+				}
+			}
+			else{
+				//We are the last program
 				execlp(argv[i+1], argv[i+1], NULL);
 			}
 		}
