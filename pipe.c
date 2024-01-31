@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
 		execlp(argv[1], argv[1], NULL);
 	}
 	//Declare pipe2's fds so we can still access them outside of the loop
-	int fds2[2];
 	for(int i = 1; i < argc; i+=2){
 		//If only one remaining process
 		if(i+1 == argc){
@@ -52,9 +51,6 @@ int main(int argc, char *argv[])
 			dup2(fds1[1], STDOUT_FILENO);
 			close(fds1[1]);
 			close(fds1[0]);
-			if(i == 3){
-				exit(EXIT_FAILURE);
-			}
 			//Call program
 			execlp(argv[i], argv[i], NULL);
 		}
@@ -73,6 +69,7 @@ int main(int argc, char *argv[])
 			printf("%i is greater than 2?\n", argc-i);
 			if(argc-i > 2){
 				printf("Not the last program, create pipe 2\n");
+				int fds2[2];
 				pipe(fds2);
 				int return_code = fork();
 				if(return_code == 0){
