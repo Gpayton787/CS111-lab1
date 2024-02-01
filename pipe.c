@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
 			dup2(fds[0], STDIN_FILENO);
 			close(fds[0]);
 			close(fds[1]);
+			//Move onto the next iteration
 		}
 		else{
 			printf("Child Process Creation Error\n");

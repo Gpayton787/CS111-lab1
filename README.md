@@ -2,16 +2,24 @@
 
 ## Pipe Up
 
-One sentence description
+This program chains together programs using the standard output of one as the standard output of the next.
 
 ## Building
 
-Explain briefly how to build your program
+`make`
+
+Run make in the terminal to build.
 
 ## Running
 
-Show an example run of your program, using at least two additional arguments, and what to expect
+Ex:
+
+`./pipe ls cat wc`
+
+Calling pipe with these arguments will run them each sequentially. Thus you should expect "ls" to list the directories which is then passed to "cat" who's output is then passed to "wc". The final output should the standard output of wc. 
 
 ## Cleaning up
 
-Explain briefly how to clean up all binary files
+`make clean`
+
+Run make clean to get rid of executable files.
