@@ -2,7 +2,7 @@
 
 ## Pipe Up
 
-This program chains together programs using the standard output of one as the standard output of the next.
+This program chains together programs using the standard output of one as the standard input of the next.
 
 ## Building
 
